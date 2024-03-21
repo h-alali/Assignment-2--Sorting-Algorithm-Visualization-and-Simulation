@@ -21,12 +21,12 @@ def draw_chart(numbers, canvas, colours):
     bar_width = 800 // len(numbers)
     for i, number in enumerate(numbers):
           canvas.create_rectangle(i * bar_width, 400, (i + 1) * bar_width, 400 - number, fill=colours[i])
-          canvas.create_text(i * bar_width, 400, (i + 1) * bar_width + bar_width / 2,400 - number - 10, text=str(number), fill="black")
+          canvas.create_text(i * bar_width + bar_width / 2, 400 - number - 10, text=str(number), fill="black")
           canvas.update()
 
-def shuffle(numbers, canvas):
-     np.ramdom.shuffle(numbers)
-     draw_chart(numbers,canvas )
+def shuffle(numbers, canvas, colours):
+     np.random.shuffle(numbers)
+     draw_chart(numbers,canvas,colours )
      
 
 def array_add_from_user():
@@ -41,16 +41,16 @@ def array_add_from_user():
         print ("invalid input. please enter a valid number")
         return[]
 
-def merge_sort(numbers, canvas):
+def merge_sort(numbers, canvas, colours):
     if len(numbers) <= 1:
         return numbers
     
     
     mid = len(numbers) // 2
-    left_half = merge_sort(numbers[:mid], canvas)
-    right_half = merge_sort(numbers[mid:], canvas)
+    left_half = merge_sort(numbers[:mid], canvas,colours)
+    right_half = merge_sort(numbers[mid:], canvas,colours)
 
-    return merge(left_half, right_half, canvas)
+    return merge(left_half, right_half, canvas,colours)
 
 def merge(left, right, canvas, colours):
     merge_list = []
@@ -88,14 +88,18 @@ def merge(left, right, canvas, colours):
 if __name__ == "__main__":
     user_numbers = array_add_from_user()
     if user_numbers:
-        colours = [random.choice(list(mcolors.CSS4_COLORS.keys()))
-        for lable in range(len(user_numbers))]
+        colours = [random.choice(list(mcolors.CSS4_COLORS.keys())) for lable in range(len(user_numbers))]
       
         print(f"Numbers entered: {user_numbers}")
         root, canvas = create_chart(user_numbers)
-        shuffle_button = tk.Button(root, text= "Shuffle", command=lambda: shuffle(user_numbers , canvas))
+
+        shuffle_button = tk.Button(root, text= "Shuffle", command=lambda: shuffle(user_numbers , canvas, colours))
         shuffle_button.pack()
-        sort_button = tk.Button(root, text="Sort", command=lambda: merge_sort(user_numbers, canvas))
-        sorted_numbers = merge_sort(user_numbers,canvas)
+
+        sort_button = tk.Button(root, text="Sort", command=lambda: merge_sort(user_numbers, canvas,colours))
+        sorted_numbers = merge_sort(user_numbers,canvas, colours)
         print(f"sorted numbers:{ sorted_numbers}")
+   
+        shuffle_button.pack()
+        sort_button.pack()
         root.mainloop()
