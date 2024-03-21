@@ -79,16 +79,14 @@ def merge(left, right, canvas, colours):
             merge_list.append(left[i])
             i += 1
             draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-            time.sleep(0.7)
-            swap_sound.play()
+            time.sleep(0.9)
             print("Merge step: ", merge_list + left[i:] + right[j:])
 
     while j < len(right):
             merge_list.append(right[j])
             j += 1 
             draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-            time.sleep(0.7)
-            swap_sound.play()
+            time.sleep(0.9)
             print("Merge step: ", merge_list + left[i:] + right[j:])
     return merge_list
 
