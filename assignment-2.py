@@ -8,6 +8,10 @@ import time
 import numpy as np
 import random
 import matplotlib.colors as mcolors
+import pygame
+
+pygame.mixer.init()
+swap_sound = pygame.mixer.Sound('swap.mp3')
 
 def create_chart(numbers):
      root = tk.Tk()
@@ -67,21 +71,24 @@ def merge(left, right, canvas, colours):
             merge_list.append(right[j])
             j += 1
         draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-        time.sleep(0.5)
+        time.sleep(0.7)
+        swap_sound.play()
         print("Merge step: ", merge_list + left[i:] + right[j:])
 
     while i < len(left):
             merge_list.append(left[i])
             i += 1
             draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-            time.sleep(0.5)
+            time.sleep(0.7)
+            swap_sound.play()
             print("Merge step: ", merge_list + left[i:] + right[j:])
 
     while j < len(right):
             merge_list.append(right[j])
             j += 1 
             draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-            time.sleep(0.5)
+            time.sleep(0.7)
+            swap_sound.play()
             print("Merge step: ", merge_list + left[i:] + right[j:])
     return merge_list
 
