@@ -12,7 +12,7 @@ import matplotlib.colors as mcolors
 def create_chart(numbers):
      root = tk.Tk()
      canvas = tk.Canvas(root, width=800 , height=400)
-     canvas.pack()
+     canvas.grid(row=0, column= 0 , columnspan= 2)
      return root,canvas
 
 def draw_chart(numbers, canvas, colours):
@@ -67,21 +67,21 @@ def merge(left, right, canvas, colours):
             merge_list.append(right[j])
             j += 1
         draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-        time.sleep(0.01)
+        time.sleep(0.5)
         print("Merge step: ", merge_list + left[i:] + right[j:])
 
     while i < len(left):
             merge_list.append(left[i])
             i += 1
             draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-            time.sleep(0.01)
+            time.sleep(0.5)
             print("Merge step: ", merge_list + left[i:] + right[j:])
 
     while j < len(right):
             merge_list.append(right[j])
             j += 1 
             draw_chart(merge_list + left[i:] + right[j:], canvas, colours)
-            time.sleep(0.01)
+            time.sleep(0.5)
             print("Merge step: ", merge_list + left[i:] + right[j:])
     return merge_list
 
@@ -94,12 +94,11 @@ if __name__ == "__main__":
         root, canvas = create_chart(user_numbers)
 
         shuffle_button = tk.Button(root, text= "Shuffle", command=lambda: shuffle(user_numbers , canvas, colours))
-        shuffle_button.pack()
 
         sort_button = tk.Button(root, text="Sort", command=lambda: merge_sort(user_numbers, canvas,colours))
         sorted_numbers = merge_sort(user_numbers,canvas, colours)
         print(f"sorted numbers:{ sorted_numbers}")
-   
-        shuffle_button.pack()
-        sort_button.pack()
+      
+        shuffle_button.grid(row=1,column=0)
+        sort_button.grid(row=1,column=1)
         root.mainloop()
